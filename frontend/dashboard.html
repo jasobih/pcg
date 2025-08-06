@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Postcode Gigs</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>My Dashboard</h1>
+        <a href="index.html" class="btn">Home</a>
+    </header>
+    <main>
+        <section id="my-profile">
+            <h2>My Profile</h2>
+            <form id="profile-form">
+                <label for="bio">My Bio</label>
+                <textarea id="bio" name="bio"></textarea>
+                <button type="submit" class="btn">Update Profile</button>
+            </form>
+        </section>
+
+        <section id="my-gigs">
+            <h2>My Gigs</h2>
+            <div id="my-gigs-list"></div>
+        </section>
+
+        <section id="my-messages">
+            <h2>My Messages</h2>
+            <div id="my-messages-list"></div>
+        </section>
+    </main>
+
+    <div id="review-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Leave a Review</h2>
+            <form id="modal-review-form">
+                <label for="modal-rating">Rating (1-5)</label>
+                <input type="number" id="modal-rating" name="rating" min="1" max="5" required>
+                <label for="modal-comment">Comment</label>
+                <textarea id="modal-comment" name="comment" required></textarea>
+                <button type="submit" class="btn">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

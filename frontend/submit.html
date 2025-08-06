@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Gig - Postcode Gigs</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Post a New Gig</h1>
+    </header>
+    <main>
+        <form id="submit-form">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" required>
+
+            <label>Gig Type</label>
+            <input type="radio" id="odd_job" name="gig_type" value="ODD_JOB" checked> <label for="odd_job">Odd Job</label>
+            <input type="radio" id="market_spot" name="gig_type" value="MARKET_SPOT"> <label for="market_spot">Market Spot</label>
+
+            <label for="suburb">Suburb</label>
+            <input type="text" id="suburb" name="suburb" required>
+
+            <label for="details">Details</label>
+            <textarea id="details" name="details" required></textarea>
+
+            <label for="image">Image</label>
+            <input type="file" id="image" name="image" accept="image/*">
+
+            <div id="captcha-placeholder"></div>
+
+            <button type="submit" class="btn">Submit Gig</button>
+        </form>
+    </main>
+    <script src="js/submit.js"></script>
+</body>
+</html>
