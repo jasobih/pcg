@@ -11,6 +11,7 @@ from collections import defaultdict
 from . import models, schemas, security
 from .database import SessionLocal, engine
 from .config import settings
+from .security import get_current_user
 
 models.Base.metadata.create_all(bind=engine)
 
