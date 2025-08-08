@@ -188,14 +188,16 @@ def complete_gig(gig_id: int, db: Session = Depends(get_db), current_user: model
 
 
 @app.post("/api/gigs", response_model=schemas.Gig, status_code=201)
-def create_gig(gig: schemas.GigCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+def create_gig(gig: schemas.GigCreate, request: Request, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     rate_limit(current_user.username, 3, 60)  # 3 posts per hour per user
 
     # Keyword filter
     if any(word in gig.title.lower() or word in gig.details.lower() for word in BLACKLISTED_WORDS):
         raise HTTPException(status_code=400, detail="Post contains blacklisted words.")
 
-    db_gig = models.Gig(**gig.dict(), owner_id=current_user.id)
+    client_ip = request.client.host if request.client else None
+
+    db_gig = models.Gig(**gig.dict(), owner_id=current_user.id, client_ip=client_ip)
     db.add(db_gig)
     db.commit()
     db.refresh(db_gig)

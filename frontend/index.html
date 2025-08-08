@@ -32,6 +32,7 @@
             border-top: 1px solid var(--pico-muted-border-color);
             font-size: 0.875rem;
             color: var(--pico-muted-color);
+            text-align: center; /* Center the footer text */
         }
         .task-card img {
             max-width: 100%;
@@ -90,6 +91,7 @@
                 <option value="oldest">Oldest First</option>
             </select>
             <input type="text" id="search-input" placeholder="Search tasks...">
+            <input type="text" id="suburb-filter" placeholder="Filter by Suburb/Postcode...">
         </div>
 
         <section id="gig-list" class="grid">
@@ -98,7 +100,7 @@
     </main>
 
     <footer class="container-fluid">
-        <small>&copy; 2025 TaskMate. All rights reserved.</small>
+        <small>&copy; 2025 TaskMate. All rights reserved. | <a href="privacy.html">Privacy Policy & Terms</a></small>
     </footer>
 
     <script src="js/common.js"></script>
@@ -114,6 +116,7 @@
             const categoryFilter = document.getElementById('category-filter');
             const sortBy = document.getElementById('sort-by');
             const searchInput = document.getElementById('search-input');
+            const suburbFilter = document.getElementById('suburb-filter');
 
             let allGigs = []; // Store all fetched gigs
 
@@ -148,6 +151,12 @@
                         gig.details.toLowerCase().includes(searchTerm) ||
                         gig.suburb.toLowerCase().includes(searchTerm)
                     );
+                }
+
+                // Filter by Suburb/Postcode
+                const selectedSuburb = suburbFilter.value.toLowerCase();
+                if (selectedSuburb) {
+                    filteredGigs = filteredGigs.filter(gig => gig.suburb.toLowerCase().includes(selectedSuburb));
                 }
 
                 // Sort
@@ -185,6 +194,7 @@
             categoryFilter.addEventListener('change', renderGigs);
             sortBy.addEventListener('change', renderGigs);
             searchInput.addEventListener('input', renderGigs);
+            suburbFilter.addEventListener('input', renderGigs);
 
             fetchAndRenderGigs(); // Initial fetch and render
         });

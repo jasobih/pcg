@@ -30,6 +30,7 @@ class Gig(Base):
     report_count = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
     owner_id = Column(Integer, ForeignKey("users.id"))
+    client_ip = Column(String, nullable=True)
 
     owner = relationship("User", back_populates="gigs")
 

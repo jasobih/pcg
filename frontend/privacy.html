@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy & Terms - TaskMate</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>TaskMate</strong></li>
+        </ul>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="submit.html">Post a Task</a></li>
+            <li><a href="login.html" id="login-link">Login</a></li>
+            <li><a href="register.html" id="register-link">Register</a></li>
+            <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
+            <li>
+                <label for="theme-switch">Theme</label>
+                <input type="checkbox" id="theme-switch" role="switch">
+            </li>
+        </ul>
+    </nav>
+    <main class="container">
+        <hgroup>
+            <h1>Privacy Policy & Terms</h1>
+            <h2>Your privacy and our guidelines</h2>
+        </hgroup>
+
+        <section>
+            <h3>1. General Disclaimer</h3>
+            <p>TaskMate is a platform connecting individuals for various tasks. We do not endorse or verify the quality, safety, or legality of any task listed or performed. Users engage in tasks at their own risk. We encourage all users to exercise caution and due diligence before engaging in any transaction or service.</p>
+
+            <h3>2. Content Moderation</h3>
+            <p>While we strive to maintain a safe and respectful environment, TaskMate is not responsible for the content of user-generated listings. We do our best to moderate listings and remove any content that violates our terms of service, including but not limited to illegal, offensive, or fraudulent activities.</p>
+
+            <h3>3. Prohibited Activities & Enforcement</h3>
+            <p>Any listing or activity deemed illegal, harmful, or in violation of these terms will be immediately removed. Users found engaging in such activities will have their accounts blocked and may be permanently banned from the platform. In cases where illegal activities are suspected or confirmed, TaskMate reserves the right to cooperate fully with law enforcement agencies, which may include sharing user IP addresses and other relevant information with authorities.</p>
+
+            <h3>4. Data Collection</h3>
+            <p>We collect certain information, including IP addresses, to monitor platform usage, prevent abuse, and ensure the security of our services. This data may be used for moderation purposes and, if necessary, shared with authorities as outlined in Section 3.</p>
+
+            <h3>5. Changes to Terms</h3>
+            <p>TaskMate reserves the right to update or modify these terms at any time without prior notice. Your continued use of the platform constitutes acceptance of the revised terms.</p>
+        </section>
+    </main>
+
+    <footer class="container-fluid">
+        <small>&copy; 2025 TaskMate. All rights reserved. | <a href="privacy.html">Privacy Policy & Terms</a></small>
+    </footer>
+
+    <script src="js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle logic
+            const themeSwitch = document.getElementById('theme-switch');
+            themeSwitch.addEventListener('change', () => {
+                document.documentElement.setAttribute('data-theme', themeSwitch.checked ? 'dark' : 'light');
+            });
+        });
+    </script>
+</body>
+</html>
