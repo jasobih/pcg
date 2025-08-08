@@ -1,4 +1,3 @@
-
 fastapi
 uvicorn
 sqlalchemy
@@ -7,3 +6,4 @@ python-dotenv
 passlib[bcrypt]
 python-jose[cryptography]
 fastapi-mail
+python-multipart
