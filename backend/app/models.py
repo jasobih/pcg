@@ -1,5 +1,5 @@
 
-from sqlalchemy import Column, Integer, String, DateTime, Enum as SAEnum
+from sqlalchemy import Column, Integer, String, DateTime, Enum as SAEnum, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 import enum
