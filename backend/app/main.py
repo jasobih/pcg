@@ -21,7 +21,9 @@ origins = [
     "http://localhost:8080",  # Allow requests from your frontend
     "http://localhost",
     "http://127.0.0.1:8080",
-    "http://127.0.0.1"
+    "http://127.0.0.1",
+    "http://51.161.134.191",
+    "*"
 ]
 
 app.add_middleware(
