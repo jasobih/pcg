@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, Request, Header, File, UploadFile
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
