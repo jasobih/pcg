@@ -1,4 +1,4 @@
-document.getElementById('submit-form').addEventListener('submit', (e) => {
+document.getElementById('submit-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const title = document.getElementById('title').value;
@@ -8,27 +8,55 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
     const image = document.getElementById('image').files[0];
     const token = localStorage.getItem('token');
 
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('gig_type', gig_type);
-    formData.append('suburb', suburb);
-    formData.append('details', details);
-    if (image) {
-        formData.append('image', image);
-    }
+    const gigData = {
+        title,
+        gig_type,
+        suburb,
+        details
+    };
 
-    fetch('http://51.161.134.191/api/gigs', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        },
-        body: formData
-    })
-    .then(response => {
-        if (response.status === 201) {
-            window.location.href = 'index.html';
-        } else {
-            alert('Error submitting gig.');
+    try {
+        // Step 1: Create the gig
+        const gigResponse = await fetch('http://51.161.134.191/api/gigs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(gigData)
+        });
+
+        if (!gigResponse.ok) {
+            const errorData = await gigResponse.json();
+            throw new Error(`Error creating gig: ${errorData.detail}`);
         }
-    });
+
+        const createdGig = await gigResponse.json();
+
+        // Step 2: If there's an image, upload it
+        if (image) {
+            const formData = new FormData();
+            formData.append('image', image);
+
+            const imageResponse = await fetch(`http://51.161.134.191/api/gigs/${createdGig.id}/upload-image`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            if (!imageResponse.ok) {
+                const errorData = await imageResponse.json();
+                throw new Error(`Error uploading image: ${errorData.detail}`);
+            }
+        }
+
+        // Step 3: Redirect to home page
+        window.location.href = 'index.html';
+
+    } catch (error) {
+        console.error('Submission failed:', error);
+        alert(`An error occurred: ${error.message}`);
+    }
 });

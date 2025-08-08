@@ -182,25 +182,36 @@ def complete_gig(gig_id: int, db: Session = Depends(get_db), current_user: model
 
 
 @app.post("/api/gigs", response_model=schemas.Gig, status_code=201)
-def create_gig(title: str, gig_type: str, suburb: str, details: str, image: Optional[UploadFile] = File(None), db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+def create_gig(gig: schemas.GigCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     rate_limit(current_user.username, 3, 60)  # 3 posts per hour per user
 
     # Keyword filter
-    if any(word in title.lower() or word in details.lower() for word in BLACKLISTED_WORDS):
+    if any(word in gig.title.lower() or word in gig.details.lower() for word in BLACKLISTED_WORDS):
         raise HTTPException(status_code=400, detail="Post contains blacklisted words.")
 
-    image_url = None
-    if image:
-        file_location = f"uploads/{image.filename}"
-        with open(file_location, "wb+") as file_object:
-            file_object.write(image.file.read())
-        image_url = f"/{file_location}"
-
-    db_gig = models.Gig(title=title, gig_type=gig_type, suburb=suburb, details=details, image_url=image_url, owner_id=current_user.id)
+    db_gig = models.Gig(**gig.dict(), owner_id=current_user.id)
     db.add(db_gig)
     db.commit()
     db.refresh(db_gig)
     return db_gig
+
+@app.post("/api/gigs/{gig_id}/upload-image", response_model=schemas.Gig)
+def upload_gig_image(gig_id: int, image: UploadFile = File(...), db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    gig = db.query(models.Gig).filter(models.Gig.id == gig_id).first()
+    if not gig:
+        raise HTTPException(status_code=404, detail="Gig not found")
+    if gig.owner_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to upload an image for this gig")
+
+    file_location = f"uploads/{image.filename}"
+    with open(file_location, "wb+") as file_object:
+        file_object.write(image.file.read())
+    image_url = f"/{file_location}"
+
+    gig.image_url = image_url
+    db.commit()
+    db.refresh(gig)
+    return gig
 
 @app.post("/api/gigs/{gig_id}/messages", response_model=schemas.Message, status_code=201)
 async def create_message(gig_id: int, message: schemas.MessageCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
