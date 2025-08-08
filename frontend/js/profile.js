@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             });
 
-        fetch(`/api/users/${userId}/reviews`)
+        fetch(`http://localhost:8000/api/users/${userId}/reviews`)
             .then(response => response.json())
             .then(reviews => {
                 reviews.forEach(review => {

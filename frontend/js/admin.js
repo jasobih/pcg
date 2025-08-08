@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).then(() => e.target.closest('.gig-card').remove());
         }
         if (e.target.classList.contains('delete-btn')) {
-            fetch(`/api/admin/gigs/${gigId}`, { 
+            fetch(`http://localhost:8000/api/admin/gigs/${gigId}`, { 
                 method: 'DELETE',
                 headers: { 'X-API-KEY': apiKey }
             }).then(() => e.target.closest('.gig-card').remove());

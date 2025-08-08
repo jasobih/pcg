@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Fetch and display user profile
-    fetch('/api/users/me', {
+    fetch('http://localhost:8000/api/users/me', {
         headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(response => response.json())
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
 
-        fetch(`/api/gigs/${currentReviewGigId}/reviews`, {
+        fetch(`http://localhost:8000/api/gigs/${currentReviewGigId}/reviews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

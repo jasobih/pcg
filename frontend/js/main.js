@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const gigType = gigTypeFilter.value;
         const suburb = suburbFilter.value;
 
-        let url = '/api/gigs?';
+        let url = 'http://localhost:8000/api/gigs?';
         if (searchTerm) url += `search=${searchTerm}&`;
         if (gigType) url += `gig_type=${gigType}&`;
         if (suburb) url += `suburb=${suburb}`;
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const content = messageInput.value;
         const token = localStorage.getItem('token');
 
-        fetch(`/api/gigs/${currentGigId}/messages`, {
+        fetch(`http://localhost:8000/api/gigs/${currentGigId}/messages`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

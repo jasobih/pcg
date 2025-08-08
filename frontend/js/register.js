@@ -5,7 +5,7 @@ document.getElementById('register-form').addEventListener('submit', (e) => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
-    fetch('/api/users/register', {
+    fetch('http://localhost:8000/api/users/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)

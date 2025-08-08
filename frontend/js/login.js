@@ -8,7 +8,7 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
         data.append(pair[0], pair[1]);
     }
 
-    fetch('/api/token', {
+    fetch('http://localhost:8000/api/token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: data
