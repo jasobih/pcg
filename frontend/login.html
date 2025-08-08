@@ -17,7 +17,10 @@
             <li><a href="login.html" class="active">Login</a></li>
             <li><a href="register.html">Register</a></li>
             <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
-            <li><button id="theme-toggle">Toggle Theme</button></li>
+            <li>
+                <label for="theme-switch">Theme</label>
+                <input type="checkbox" id="theme-switch" role="switch">
+            </li>
         </ul>
     </nav>
     <main class="container">
@@ -39,9 +42,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Theme toggle logic
-            const themeToggle = document.getElementById('theme-toggle');
-            themeToggle.addEventListener('click', () => {
-                document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+            const themeSwitch = document.getElementById('theme-switch');
+            themeSwitch.addEventListener('change', () => {
+                document.documentElement.setAttribute('data-theme', themeSwitch.checked ? 'dark' : 'light');
             });
         });
 

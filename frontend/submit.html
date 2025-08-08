@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit a Task - TaskMate</title>
+    <title>Post a Task - TaskMate</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -17,7 +17,10 @@
             <li><a href="login.html">Login</a></li>
             <li><a href="register.html">Register</a></li>
             <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
-            <li><button id="theme-toggle">Toggle Theme</button></li>
+            <li>
+                <label for="theme-switch">Theme</label>
+                <input type="checkbox" id="theme-switch" role="switch">
+            </li>
         </ul>
     </nav>
     <main class="container">
@@ -26,32 +29,39 @@
             <h2>Share your task with the community</h2>
         </hgroup>
         <form id="submit-form">
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" required>
+            <label for="title">Task Title</label>
+            <input type="text" id="title" name="title" placeholder="e.g., Mow my lawn, Fix my leaky tap" required>
 
-            <label>Task Type</label>
-            <input type="radio" id="odd_job" name="gig_type" value="ODD_JOB" checked> <label for="odd_job">Odd Job</label>
-            <input type="radio" id="market_spot" name="gig_type" value="MARKET_SPOT"> <label for="market_spot">Market Spot</label>
+            <label for="category">Category</label>
+            <select id="category" name="gig_type" required>
+                <option value="">Select a category</option>
+                <option value="ODD_JOB">Home & Garden</option>
+                <option value="MARKET_SPOT">Tech Support</option>
+                <option value="CREATIVE_SERVICES">Creative Services</option>
+                <option value="ERRANDS_DELIVERY">Errands & Delivery</option>
+                <option value="TUTORING">Tutoring</option>
+                <option value="OTHER">Other</option>
+            </select>
 
             <label for="suburb">Suburb</label>
-            <input type="text" id="suburb" name="suburb" required>
+            <input type="text" id="suburb" name="suburb" placeholder="e.g., Brisbane CBD, Fortitude Valley" required>
 
-            <label for="details">Details</label>
-            <textarea id="details" name="details" required></textarea>
+            <label for="details">Task Details</label>
+            <textarea id="details" name="details" rows="5" placeholder="Describe the task in detail, including any specific requirements or tools needed." required></textarea>
 
-            <label for="image">Image</label>
+            <label for="image">Upload Image (Optional)</label>
             <input type="file" id="image" name="image" accept="image/*">
 
-            <button type="submit">Submit Task</button>
+            <button type="submit">Post Task</button>
         </form>
     </main>
     <script src="js/common.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Theme toggle logic
-            const themeToggle = document.getElementById('theme-toggle');
-            themeToggle.addEventListener('click', () => {
-                document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+            const themeSwitch = document.getElementById('theme-switch');
+            themeSwitch.addEventListener('change', () => {
+                document.documentElement.setAttribute('data-theme', themeSwitch.checked ? 'dark' : 'light');
             });
         });
 
@@ -59,7 +69,7 @@
             e.preventDefault();
 
             const title = document.getElementById('title').value;
-            const gig_type = document.querySelector('input[name="gig_type"]:checked').value;
+            const gig_type = document.getElementById('category').value; // Changed to category select
             const suburb = document.getElementById('suburb').value;
             const details = document.getElementById('details').value;
             const image = document.getElementById('image').files[0];
