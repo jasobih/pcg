@@ -17,7 +17,7 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
         formData.append('image', image);
     }
 
-    fetch('http://localhost:8000/api/gigs', {
+    fetch('http://51.161.134.191/api/gigs', {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`
