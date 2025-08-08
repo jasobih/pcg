@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postcode Gigs</title>
+    <title>TaskMate</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <nav class="container-fluid">
         <ul>
-            <li><strong>Postcode Gigs</strong></li>
+            <li><strong>TaskMate</strong></li>
         </ul>
         <ul>
             <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="submit.html">Post a Gig</a></li>
+            <li><a href="submit.html">Post a Task</a></li>
             <li><a href="login.html" id="login-link">Login</a></li>
             <li><a href="register.html" id="register-link">Register</a></li>
             <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
+            <li><button id="theme-toggle">Toggle Theme</button></li>
         </ul>
     </nav>
     <main class="container">
         <hgroup>
-            <h1>Available Gigs</h1>
-            <h2>Find or post local gigs in your area.</h2>
+            <h1>Available Tasks</h1>
+            <h2>Find or post local tasks in your area.</h2>
         </hgroup>
 
         <section id="gig-list">
@@ -33,6 +34,12 @@
     <script src="js/common.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle logic
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', () => {
+                document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+            });
+
             fetch('http://51.161.134.191/api/gigs')
                 .then(response => response.json())
                 .then(gigs => {

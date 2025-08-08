@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit a Gig - Postcode Gigs</title>
+    <title>Submit a Task - TaskMate</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <nav class="container-fluid">
         <ul>
-            <li><strong>Postcode Gigs</strong></li>
+            <li><strong>TaskMate</strong></li>
         </ul>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="submit.html" class="active">Post a Gig</a></li>
+            <li><a href="submit.html" class="active">Post a Task</a></li>
             <li><a href="login.html">Login</a></li>
             <li><a href="register.html">Register</a></li>
             <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
+            <li><button id="theme-toggle">Toggle Theme</button></li>
         </ul>
     </nav>
     <main class="container">
         <hgroup>
-            <h1>Post a New Gig</h1>
-            <h2>Share your gig with the community</h2>
+            <h1>Post a New Task</h1>
+            <h2>Share your task with the community</h2>
         </hgroup>
         <form id="submit-form">
             <label for="title">Title</label>
             <input type="text" id="title" name="title" required>
 
-            <label>Gig Type</label>
+            <label>Task Type</label>
             <input type="radio" id="odd_job" name="gig_type" value="ODD_JOB" checked> <label for="odd_job">Odd Job</label>
             <input type="radio" id="market_spot" name="gig_type" value="MARKET_SPOT"> <label for="market_spot">Market Spot</label>
 
@@ -41,11 +42,19 @@
             <label for="image">Image</label>
             <input type="file" id="image" name="image" accept="image/*">
 
-            <button type="submit">Submit Gig</button>
+            <button type="submit">Submit Task</button>
         </form>
     </main>
     <script src="js/common.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle logic
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', () => {
+                document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+            });
+        });
+
         document.getElementById('submit-form').addEventListener('submit', async (e) => {
             e.preventDefault();
 

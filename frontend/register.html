@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Postcode Gigs</title>
+    <title>Register - TaskMate</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <nav class="container-fluid">
         <ul>
-            <li><strong>Postcode Gigs</strong></li>
+            <li><strong>TaskMate</strong></li>
         </ul>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="submit.html">Post a Gig</a></li>
+            <li><a href="submit.html">Post a Task</a></li>
             <li><a href="login.html">Login</a></li>
             <li><a href="register.html" class="active">Register</a></li>
             <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
+            <li><button id="theme-toggle">Toggle Theme</button></li>
         </ul>
     </nav>
     <main class="container">
         <hgroup>
             <h1>Create an Account</h1>
-            <h2>Join Postcode Gigs today!</h2>
+            <h2>Join TaskMate today!</h2>
         </hgroup>
         <form id="register-form">
             <label for="username">Username</label>
@@ -39,6 +40,14 @@
     </main>
     <script src="js/common.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle logic
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', () => {
+                document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+            });
+        });
+
         document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
 

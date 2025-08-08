@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, computed_field
 from datetime import datetime
 from typing import List, Optional
 from .models import GigType, GigStatus
@@ -19,10 +19,14 @@ class Gig(GigBase):
     report_count: int
     created_at: datetime
     owner_id: int
-    owner_username: str
+
+    @computed_field
+    @property
+    def owner_username(self) -> str:
+        return self.owner.username
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class UserBase(BaseModel):
     username: str
@@ -37,7 +41,7 @@ class User(UserBase):
     gigs: list[Gig] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Token(BaseModel):
     access_token: str
@@ -58,7 +62,7 @@ class Message(MessageBase):
     gig_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ReviewBase(BaseModel):
     rating: int
@@ -73,4 +77,4 @@ class Review(ReviewBase):
     reviewee_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
