@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post a Task - TaskMate</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Custom styles for TaskMate */
+        .form-section {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--pico-muted-border-color);
+            border-radius: var(--pico-border-radius);
+            background-color: var(--pico-background-color);
+        }
+        .form-section h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--pico-primary);
+        }
+        .form-section label {
+            margin-bottom: 0.5rem;
+        }
+        .form-section input, .form-section select, .form-section textarea {
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="container-fluid">
@@ -29,32 +50,43 @@
             <h2>Share your task with the community</h2>
         </hgroup>
         <form id="submit-form">
-            <label for="title">Task Title</label>
-            <input type="text" id="title" name="title" placeholder="e.g., Mow my lawn, Fix my leaky tap" required>
+            <div class="form-section">
+                <h3>Task Details</h3>
+                <label for="title">Task Title</label>
+                <input type="text" id="title" name="title" placeholder="e.g., Mow my lawn, Fix my leaky tap" required>
 
-            <label for="category">Category</label>
-            <select id="category" name="gig_type" required>
-                <option value="">Select a category</option>
-                <option value="ODD_JOB">Home & Garden</option>
-                <option value="MARKET_SPOT">Tech Support</option>
-                <option value="CREATIVE_SERVICES">Creative Services</option>
-                <option value="ERRANDS_DELIVERY">Errands & Delivery</option>
-                <option value="TUTORING">Tutoring</option>
-                <option value="OTHER">Other</option>
-            </select>
+                <label for="category">Category</label>
+                <select id="category" name="gig_type" required>
+                    <option value="">Select a category</option>
+                    <option value="ODD_JOB">Home & Garden</option>
+                    <option value="MARKET_SPOT">Tech Support</option>
+                    <option value="CREATIVE_SERVICES">Creative Services</option>
+                    <option value="ERRANDS_DELIVERY">Errands & Delivery</option>
+                    <option value="TUTORING">Tutoring</option>
+                    <option value="OTHER">Other</option>
+                </select>
 
-            <label for="suburb">Suburb</label>
-            <input type="text" id="suburb" name="suburb" placeholder="e.g., Brisbane CBD, Fortitude Valley" required>
+                <label for="suburb">Suburb</label>
+                <input type="text" id="suburb" name="suburb" placeholder="e.g., Brisbane CBD, Fortitude Valley" required>
 
-            <label for="details">Task Details</label>
-            <textarea id="details" name="details" rows="5" placeholder="Describe the task in detail, including any specific requirements or tools needed." required></textarea>
+                <label for="details">Task Description</label>
+                <textarea id="details" name="details" rows="5" placeholder="Describe the task in detail, including any specific requirements or tools needed." required></textarea>
+            </div>
 
-            <label for="image">Upload Image (Optional)</label>
-            <input type="file" id="image" name="image" accept="image/*">
+            <div class="form-section">
+                <h3>Optional: Add an Image</h3>
+                <label for="image">Upload Image</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
 
             <button type="submit">Post Task</button>
         </form>
     </main>
+
+    <footer class="container-fluid">
+        <small>&copy; 2025 TaskMate. All rights reserved.</small>
+    </footer>
+
     <script src="js/common.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
