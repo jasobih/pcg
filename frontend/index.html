@@ -1,50 +1,77 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postcode Gigs - Brisbane</title>
+    <title>Postcode Gigs</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Postcode Gigs - Brisbane's Local Gig Board</h1>
-        <nav id="auth-nav">
-            <a href="login.html" class="btn">Login</a>
-            <a href="register.html" class="btn">Register</a>
-        </nav>
-        <a href="submit.html" class="btn" id="post-gig-btn" style="display:none;">Post a Gig</a>
-        <a href="dashboard.html" class="btn" id="dashboard-btn" style="display:none;">My Dashboard</a>
-        <button class="btn" id="logout-btn" style="display:none;">Logout</button>
-    </header>
-    <main>
-        <section id="search-filter">
-            <input type="text" id="search-bar" placeholder="Search for gigs...">
-            <select id="gig-type-filter">
-                <option value="">All Types</option>
-                <option value="ODD_JOB">Odd Job</option>
-                <option value="MARKET_SPOT">Market Spot</option>
-            </select>
-            <input type="text" id="suburb-filter" placeholder="Filter by suburb...">
-        </section>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>Postcode Gigs</strong></li>
+        </ul>
+        <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="submit.html">Post a Gig</a></li>
+            <li><a href="login.html" id="login-link">Login</a></li>
+            <li><a href="register.html" id="register-link">Register</a></li>
+            <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <hgroup>
+            <h1>Available Gigs</h1>
+            <h2>Find or post local gigs in your area.</h2>
+        </hgroup>
+
         <section id="gig-list">
             <!-- Gigs will be loaded here by JavaScript -->
         </section>
     </main>
 
-    <div id="message-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Messages</h2>
-            <div id="message-history"></div>
-            <form id="message-form">
-                <textarea id="message-input" placeholder="Type your message..."></textarea>
-                <button type="submit" class="btn">Send</button>
-            </form>
-        </div>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const loginLink = document.getElementById('login-link');
+            const registerLink = document.getElementById('register-link');
+            const logoutLink = document.getElementById('logout-link');
 
-    <script src="js/main.js"></script>
+            if (token) {
+                loginLink.style.display = 'none';
+                registerLink.style.display = 'none';
+                logoutLink.style.display = 'block';
+            } else {
+                loginLink.style.display = 'block';
+                registerLink.style.display = 'block';
+                logoutLink.style.display = 'none';
+            }
+
+            logoutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            });
+
+            fetch('http://51.161.134.191/api/gigs')
+                .then(response => response.json())
+                .then(gigs => {
+                    const gigList = document.getElementById('gig-list');
+                    gigs.forEach(gig => {
+                        const gigArticle = document.createElement('article');
+                        gigArticle.innerHTML = `
+                            <header>${gig.title}</header>
+                            <p><strong>Type:</strong> ${gig.gig_type}</p>
+                            <p><strong>Suburb:</strong> ${gig.suburb}</p>
+                            <p>${gig.details}</p>
+                            ${gig.image_url ? `<img src="${gig.image_url}" alt="${gig.title}" style="max-width: 100%; height: auto;">` : ''}
+                            <footer>Posted by: ${gig.owner_username}</footer>
+                        `;
+                        gigList.appendChild(gigArticle);
+                    });
+                })
+                .catch(error => console.error('Error fetching gigs:', error));
+        });
+    </script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +7,23 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Login</h1>
-    </header>
-    <main>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>Postcode Gigs</strong></li>
+        </ul>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="submit.html">Post a Gig</a></li>
+            <li><a href="login.html" class="active">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <hgroup>
+            <h1>Login</h1>
+            <h2>Access your account</h2>
+        </hgroup>
         <form id="login-form">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
@@ -19,9 +31,65 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit" class="btn">Login</button>
+            <button type="submit">Login</button>
         </form>
     </main>
-    <script src="js/login.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const loginLink = document.getElementById('login-link');
+            const registerLink = document.getElementById('register-link');
+            const logoutLink = document.getElementById('logout-link');
+
+            if (token) {
+                loginLink.style.display = 'none';
+                registerLink.style.display = 'none';
+                logoutLink.style.display = 'block';
+            } else {
+                loginLink.style.display = 'block';
+                registerLink.style.display = 'block';
+                logoutLink.style.display = 'none';
+            }
+
+            logoutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            });
+        });
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const formData = new URLSearchParams();
+            formData.append('username', username);
+            formData.append('password', password);
+
+            try {
+                const response = await fetch('http://51.161.134.191/api/token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData.toString()
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('token', data.access_token);
+                    window.location.href = 'index.html';
+                } else {
+                    const errorData = await response.json();
+                    alert(`Login failed: ${errorData.detail}`);
+                }
+            } catch (error) {
+                console.error('Login failed:', error);
+                alert('An error occurred during login.');
+            }
+        });
+    </script>
 </body>
 </html>

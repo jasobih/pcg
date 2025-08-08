@@ -72,18 +72,24 @@ ADMIN_API_KEY = "your_super_secret_admin_key"  # Should be in env var
 BLACKLISTED_WORDS = {"pills", "gun", "drugs", "escort", "gambling"}
 
 # Rate limiting (in-memory, basic implementation)
-request_counts = defaultdict(lambda: defaultdict(int))
-request_timestamps = defaultdict(lambda: defaultdict(datetime))
+request_counts = {}
+request_timestamps = {}
 
 def rate_limit(ip: str, max_requests: int, period_minutes: int):
     now = datetime.now()
-    if now - request_timestamps[ip]["timestamp"] > timedelta(minutes=period_minutes):
-        request_counts[ip]["count"] = 1
-        request_timestamps[ip]["timestamp"] = now
-    else:
-        request_counts[ip]["count"] += 1
     
-    if request_counts[ip]["count"] > max_requests:
+    # Get current timestamp for the IP, or a very old one if not present
+    timestamp = request_timestamps.get(ip, datetime.min)
+
+    if now - timestamp > timedelta(minutes=period_minutes):
+        # If the period has expired, reset the count and timestamp
+        request_counts[ip] = 1
+        request_timestamps[ip] = now
+    else:
+        # Otherwise, increment the count
+        request_counts[ip] = request_counts.get(ip, 0) + 1
+    
+    if request_counts[ip] > max_requests:
         raise HTTPException(status_code=429, detail="Too Many Requests")
 
 def get_admin_api_key(x_api_key: str = Header(...)):
