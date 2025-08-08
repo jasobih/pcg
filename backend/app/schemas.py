@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel
 from datetime import datetime
 from typing import List, Optional
@@ -52,6 +51,11 @@ class MessageBase(BaseModel):
 
 class MessageCreate(MessageBase):
     pass
+
+class Message(MessageBase):
+    id: int
+    sender_id: int
+    gig_id: int
 
     class Config:
         orm_mode = True
